@@ -1,4 +1,4 @@
-# Flow Landmark NFT 🌊
+# Flow Landmark NFT / Capt Today🌊
 
 A decentralized social event platform built on Flow blockchain where users can create, attend events, mint NFT moments, and collect accessories through gacha mechanics.
 
@@ -280,7 +280,6 @@ This project is licensed under the MIT License.
 
 - Built on [Flow Blockchain](https://flow.com/)
 - NFT Storefront V2 by Flow team
-- Magic Link for authentication
 - Ent framework for Go ORM
 
 ## 📧 Contact
