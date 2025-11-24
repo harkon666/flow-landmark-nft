@@ -1,182 +1,293 @@
-## 👋 Welcome Flow Developer!
+# Flow Landmark NFT 🌊
 
-This project is a starting point for you to develop smart contracts on the Flow Blockchain. It comes with example contracts, scripts, transactions, and tests to help you get started.
+A decentralized social event platform built on Flow blockchain where users can create, attend events, mint NFT moments, and collect accessories through gacha mechanics.
 
-## 🔨 Getting Started
+## 🌟 Features
 
-Here are some essential resources to help you hit the ground running:
+### Event Management
+- **Create Events**: Organize online/offline events with customizable details
+- **Event Registration**: Users can register for events on-chain
+- **Check-in System**: Verify attendance with blockchain-backed check-ins
+- **Event Passes**: NFT-based passes that serve as tickets
 
-- **[Flow Documentation](https://developers.flow.com/)** - The official Flow Documentation is a great starting point to start learning about [building](https://developers.flow.com/build/flow) on Flow.
-- **[Cadence Documentation](https://cadence-lang.org/docs/language)** - Cadence is the native language for the Flow Blockchain. It is a resource-oriented programming language that is designed for developing smart contracts.  The documentation is a great place to start learning about the language.
-- **[Visual Studio Code](https://code.visualstudio.com/)** and the **[Cadence Extension](https://marketplace.visualstudio.com/items?itemName=onflow.cadence)** - It is recommended to use the Visual Studio Code IDE with the Cadence extension installed.  This will provide syntax highlighting, code completion, and other features to support Cadence development.
-- **[Flow Clients](https://developers.flow.com/tools/clients)** - There are clients available in multiple languages to interact with the Flow Blockchain.  You can use these clients to interact with your smart contracts, run transactions, and query data from the network.
-- **[Block Explorers](https://developers.flow.com/ecosystem/block-explorers)** - Block explorers are tools that allow you to explore on-chain data.  You can use them to view transactions, accounts, events, and other information.  [Flowser](https://flowser.dev/) is a powerful block explorer for local development on the Flow Emulator.
+### NFT System
+- **Moment NFTs**: Capture and mint memorable moments as NFTs
+- **Free Mint**: First-time users get one free moment mint
+- **Event Pass Redemption**: Convert event passes into moment NFTs
+- **Accessory System**: Equip/unequip accessories to customize moment NFTs
 
-## 📦 Project Structure
+### Marketplace
+- **NFT Trading**: Buy and sell moments and accessories
+- **Storefront Integration**: Powered by NFTStorefrontV2
+- **Listing Management**: Create, cancel, and manage listings
 
-Your project has been set up with the following structure:
+### Gacha & Collectibles
+- **Gacha Packs**: Purchase mystery accessory packs
+- **Reveal Mechanics**: Open packs to discover accessories
+- **Accessory Collection**: Build your collection of unique items
 
-- `flow.json` - This is the configuration file for your project (analogous to a `package.json` file for NPM).  It has been initialized with a basic configuration to get started.
-- `/cadence` - This is where your Cadence smart contracts code lives
+### Social Features
+- **User Profiles**: Customizable profiles with bio, images, and social links
+- **Moment Feed**: Browse and discover moments from the community
+- **Likes & Comments**: Engage with content
+- **Featured Content**: Highlight favorite moments and passes
 
-Inside the `cadence` folder you will find:
-- `/contracts` - This folder contains your Cadence contracts (these are deployed to the network and contain the business logic for your application)
-  - `Counter.cdc`
-- `/scripts` - This folder contains your Cadence scripts (read-only operations)
-  - `GetCounter.cdc`
-- `/transactions` - This folder contains your Cadence transactions (state-changing operations)
-  - `IncrementCounter.cdc`
-- `/tests` - This folder contains your Cadence tests (integration tests for your contracts, scripts, and transactions to verify they behave as expected)
+## 🛠 Tech Stack
 
-## Running the Existing Project
+### Frontend
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **TanStack Router** - File-based routing
+- **TanStack Query** - Data fetching & caching
+- **Tailwind CSS 4** - Styling
+- **Motion (Framer Motion)** - Animations
+- **@onflow/react-sdk** - Flow blockchain integration
+- **Magic Link** - Email-based authentication
+- **Vite** - Build tool
 
-### Executing the `GetCounter` Script
+### Backend
+- **Go 1.24** - Server language
+- **Echo** - Web framework
+- **Ent** - Entity framework for database ORM
+- **PostgreSQL** - Database
+- **Swagger** - API documentation
+- **Flow Go SDK** - Flow blockchain interaction
 
-To run the `GetCounter` script, use the following command:
+### Smart Contracts
+- **Cadence** - Flow blockchain smart contract language
+- Contracts for:
+  - NFTMoment (moments)
+  - NFTAccessory (accessories)
+  - EventManager (event management)
+  - EventPass (event tickets)
+  - UserProfile (user profiles)
+  - AccessoryPack (gacha system)
 
-```shell
-flow scripts execute cadence/scripts/GetCounter.cdc
+## 📋 Prerequisites
+
+- **Node.js** >= 18
+- **Go** >= 1.24
+- **PostgreSQL** >= 14
+- **Flow CLI** (for Cadence development)
+- **Bun** or **npm** (package manager)
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/harkon666/flow-landmark-nft.git
+cd flow-landmark-nft
 ```
 
-### Sending the `IncrementCounter` Transaction
+### 2. Environment Setup
 
-To run the `IncrementCounter` transaction, use the following command:
+#### Backend Environment Variables
 
-```shell
-flow transactions send cadence/transactions/IncrementCounter.cdc
+Create `/backend/.env`:
+
+```env
+DATABASE_URL=postgres://user:password@localhost:5432/flowlandmark?sslmode=disable
+PORT=8000
+FLOW_NETWORK=testnet
+PINATA_JWT=your_pinata_jwt_here
 ```
 
-To learn more about using the CLI, check out the [Flow CLI Documentation](https://developers.flow.com/tools/flow-cli).
+#### Frontend Environment Variables
 
-## 👨‍💻 Start Developing
+Create `/frontend/.env`:
 
-### Creating a New Contract
-
-To add a new contract to your project, run the following command:
-
-```shell
-flow generate contract
+```env
+VITE_BASE_URL=http://localhost:8000
+VITE_MAGIC_PUBLISHABLE_KEY=your_magic_publishable_key
 ```
 
-This command will create a new contract file and add it to the `flow.json` configuration file.
+### 3. Database Setup
 
-### Creating a New Script
+```bash
+# Create PostgreSQL database
+createdb flowlandmark
 
-To add a new script to your project, run the following command:
-
-```shell
-flow generate script
+# The schema will be auto-created by Ent on first run
 ```
 
-This command will create a new script file.  Scripts are used to read data from the blockchain and do not modify state (i.e. get the current balance of an account, get a user's NFTs, etc).
+### 4. Backend Setup
 
-You can import any of your own contracts or installed dependencies in your script file using the `import` keyword.  For example:
+```bash
+cd backend
 
-```cadence
-import "Counter"
+# Install dependencies
+go mod download
+
+# Run database migrations (auto via Ent)
+# The schema will be created automatically when you run the app
+
+# Start the API server
+go run ./api
+
+# In another terminal, start the indexer
+go run ./indexer
 ```
 
-### Creating a New Transaction
+The backend will:
+- API server runs on `http://localhost:8000`
+- Indexer subscribes to Flow blockchain events
+- Swagger docs available at `http://localhost:8000/swagger/index.html`
 
-To add a new transaction to your project you can use the following command:
+### 5. Frontend Setup
 
-```shell
-flow generate transaction
+```bash
+cd frontend
+
+# Install dependencies
+bun install
+# or: npm install
+
+# Start development server
+bun run dev
+# or: npm run dev
 ```
 
-This command will create a new transaction file.  Transactions are used to modify the state of the blockchain (i.e purchase an NFT, transfer tokens, etc).
+Frontend runs on `http://localhost:5173`
 
-You can import any dependencies as you would in a script file.
+## 📁 Project Structure
 
-### Creating a New Test
-
-To add a new test to your project you can use the following command:
-
-```shell
-flow generate test
+```
+flow-landmark-nft/
+├── backend/
+│   ├── api/              # REST API handlers & routes
+│   ├── config/           # Configuration files
+│   ├── ent/              # Ent schema & generated code
+│   │   └── schema/       # Database entity definitions
+│   ├── indexer/          # Blockchain event indexer
+│   ├── transactions/     # Go wrappers for Cadence transactions
+│   ├── utils/            # Utility functions & event processors
+│   └── swagdto/          # Swagger DTO definitions
+├── frontend/
+│   ├── src/
+│   │   ├── components/   # React components
+│   │   │   ├── cards/    # Card components
+│   │   │   ├── modals/   # Modal dialogs
+│   │   │   └── profile/  # Profile-related components
+│   │   ├── hooks/        # Custom React hooks
+│   │   │   ├── api/      # API data fetching hooks
+│   │   │   ├── auth/     # Authentication hooks
+│   │   │   └── transactions/ # Blockchain transaction hooks
+│   │   ├── routes/       # File-based routes (TanStack Router)
+│   │   ├── providers/    # React context providers
+│   │   └── lib/          # Utility libraries & configs
+├── cadence/
+│   ├── contracts/        # Smart contracts
+│   ├── scripts/          # Read-only scripts
+│   └── transactions/     # State-changing transactions
+└── flow.json             # Flow configuration
 ```
 
-This command will create a new test file.  Tests are used to verify that your contracts, scripts, and transactions are working as expected.
+## 🔑 Key Components
 
-### Installing External Dependencies
+### Smart Contracts
 
-If you want to use external contract dependencies (such as NonFungibleToken, FlowToken, FungibleToken, etc.) you can install them using [Flow CLI Dependency Manager](https://developers.flow.com/tools/flow-cli/dependency-manager).
+| Contract | Description |
+|----------|-------------|
+| `NFTMoment` | Main NFT for user moments with equippable accessories |
+| `NFTAccessory` | Accessories that can be equipped on moments |
+| `EventManager` | Event creation, registration, and check-in |
+| `EventPass` | NFT-based event passes |
+| `UserProfile` | On-chain user profile management |
+| `AccessoryPack` | Gacha pack distribution system |
 
-For example, to install the NonFungibleToken contract you can use the following command:
+### Backend Services
 
-```shell
-flow deps add mainnet://1d7e57aa55817448.NonFungibleToken
+- **API Server** (`/api`): RESTful API with Echo framework
+- **Indexer** (`/indexer`): Listens to blockchain events and syncs to database
+- **Database**: PostgreSQL with Ent ORM
+
+### Frontend Features
+
+- **Authentication**: Magic Link email login + FCL wallet support
+- **Event Management**: Create, browse, register, and check-in
+- **Marketplace**: List and purchase NFTs
+- **Profile**: Customize profile with featured moments
+- **Gacha Shop**: Purchase and reveal accessory packs
+
+## 🔗 API Documentation
+
+Once the backend is running, visit:
+
+```
+http://localhost:8000/swagger/index.html
 ```
 
-Contracts can be found using [ContractBrowser](https://contractbrowser.com/), but be sure to verify the authenticity before using third-party contracts in your project.
+Key endpoints:
+- `GET /events` - List all events
+- `GET /events/:id` - Get event details
+- `GET /moments` - Browse moments feed
+- `GET /users/:address` - Get user profile
+- `GET /marketplace/listings` - Browse marketplace
+- `POST /upload` - Upload images to IPFS
 
-## 🧪 Testing
+## 🧪 Development
 
-To verify that your project is working as expected you can run the tests using the following command:
+### Generate Swagger Docs
 
-```shell
-flow test
+```bash
+cd backend
+swag init -g api/main.go
 ```
 
-This command will run all tests with the `_test.cdc` suffix (these can be found in the `cadence/tests` folder). You can add more tests here using the `flow generate test` command (or by creating them manually).
+### Generate Ent Code
 
-To learn more about testing in Cadence, check out the [Cadence Test Framework Documentation](https://cadence-lang.org/docs/testing-framework).
-
-## 🚀 Deploying Your Project
-
-To deploy your project to the Flow network, you must first have a Flow account and have configured your deployment targets in the `flow.json` configuration file.
-
-You can create a new Flow account using the following command:
-
-```shell
-flow accounts create
+```bash
+cd backend
+go generate ./ent
 ```
 
-Learn more about setting up deployment targets in the [Flow CLI documentation](https://developers.flow.com/tools/flow-cli/deployment/project-contracts).
+### Build Frontend
 
-### Deploying to the Flow Emulator
-
-To deploy your project to the Flow Emulator, start the emulator using the following command:
-
-```shell
-flow emulator --start
+```bash
+cd frontend
+bun run build
 ```
 
-To deploy your project, run the following command:
+## 🌐 Deployment
 
-```shell
-flow project deploy --network=emulator
-```
+### Backend
 
-This command will start the Flow Emulator and deploy your project to it. You can now interact with your project using the Flow CLI or alternate [client](https://developers.flow.com/tools/clients).
+1. Set production environment variables
+2. Build: `go build -o api ./api`
+3. Run migrations (Ent auto-creates schema)
+4. Deploy API and indexer as separate services
 
-### Deploying to Flow Testnet
+### Frontend
 
-To deploy your project to Flow Testnet you can use the following command:
+1. Build: `bun run build`
+2. Deploy `dist/` folder to static hosting (Vercel, Netlify, etc.)
+3. Set environment variables in hosting platform
 
-```shell
-flow project deploy --network=testnet
-```
+## 🤝 Contributing
 
-This command will deploy your project to Flow Testnet. You can now interact with your project on this network using the Flow CLI or any other Flow client.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Deploying to Flow Mainnet
+## 📝 License
 
-To deploy your project to Flow Mainnet you can use the following command:
+This project is licensed under the MIT License.
 
-```shell
-flow project deploy --network=mainnet
-```
+## 🙏 Acknowledgments
 
-This command will deploy your project to Flow Mainnet. You can now interact with your project using the Flow CLI or alternate [client](https://developers.flow.com/tools/clients).
+- Built on [Flow Blockchain](https://flow.com/)
+- NFT Storefront V2 by Flow team
+- Magic Link for authentication
+- Ent framework for Go ORM
 
-## 📚 Other Resources
+## 📧 Contact
 
-- [Cadence Design Patterns](https://cadence-lang.org/docs/design-patterns)
-- [Cadence Anti-Patterns](https://cadence-lang.org/docs/anti-patterns)
-- [Flow Core Contracts](https://developers.flow.com/build/core-contracts)
+- GitHub: [@harkon666](https://github.com/harkon666)
+- Project Link: [https://github.com/harkon666/flow-landmark-nft](https://github.com/harkon666/flow-landmark-nft)
 
-## 🤝 Community
-- [Flow Community Forum](https://forum.flow.com/)
-- [Flow Discord](https://discord.gg/flow)
-- [Flow Twitter](https://x.com/flow_blockchain)
+---
+
+Made with ❤️ on Flow Blockchain
