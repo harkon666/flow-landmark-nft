@@ -404,31 +404,50 @@ func UserRegistered(ctx context.Context, ev flow.Event, client *ent.Client) {
 		return
 	}
 	// 1. Dapatkan 'User'
-	user, err := client.User.Query().Where(user.AddressEQ(userAddress.String())).Only(ctx)
+	foundUser, err := client.User.Query().Where(user.AddressEQ(userAddress.String())).Only(ctx)
 	// (handle 'IsNotFound')
 	if ent.IsNotFound(err) {
 		log.Println("please setup user profile")
 		return
 	}
 	// 2. Dapatkan 'Event'
-	event, err := client.Event.Query().Where(event.EventIDEQ(uint64(eventID))).Only(ctx)
+	foundEvent, err := client.Event.Query().Where(event.EventIDEQ(uint64(eventID))).Only(ctx)
 	if err != nil {
 		log.Println("Gagal menemukan event:", uint64(eventID))
 		return
 	}
 
-	// 3. BUAT ENTRI 'ATTENDANCE' BARU
+	// 3. CHECK FOR EXISTING ATTENDANCE (DUPLICATE PREVENTION)
+	existingAttendance, err := client.Attendance.Query().
+		Where(
+			attendance.HasUserWith(user.AddressEQ(userAddress.String())),
+			attendance.HasEventWith(event.EventIDEQ(uint64(eventID))),
+		).
+		Only(ctx)
+
+	// If attendance already exists, skip creation
+	if err == nil && existingAttendance != nil {
+		log.Println("User", userAddress.String(), "already registered for", foundEvent.Name, "- skipping duplicate")
+		return
+	}
+	// Ignore NotFound error (means no duplicate exists, which is expected)
+	if err != nil && !ent.IsNotFound(err) {
+		log.Println("Error checking for existing attendance:", err)
+		return
+	}
+
+	// 4. BUAT ENTRI 'ATTENDANCE' BARU (only if not exists)
 	// Ini adalah "lem" (perekat) yang menghubungkan keduanya
 	_, err = client.Attendance.Create().
-		SetUser(user).       // Tautkan ke User
-		SetEvent(event).     // Tautkan ke Event
-		SetCheckedIn(false). // Set status (sesuai kontrak Anda)
+		SetUser(foundUser).   // Tautkan ke User
+		SetEvent(foundEvent). // Tautkan ke Event
+		SetCheckedIn(false).  // Set status (sesuai kontrak Anda)
 		Save(ctx)
 
 	if err != nil {
 		log.Println("Gagal menyimpan 'Attendance':", err)
 	} else {
-		log.Println("User", user.Address, "berhasil mendaftar ke", event.Name)
+		log.Println("User", foundUser.Address, "berhasil mendaftar ke", foundEvent.Name)
 	}
 }
 
