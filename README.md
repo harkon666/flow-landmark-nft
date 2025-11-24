@@ -23,7 +23,7 @@ A decentralized social event platform built on Flow blockchain where users can c
 
 ### Gacha & Collectibles
 - **Gacha Packs**: Purchase mystery accessory packs
-- **Reveal Mechanics**: Open packs to discover accessories
+- **Reveal Mechanics**: Open packs to discover accessories using VRF
 - **Accessory Collection**: Build your collection of unique items
 
 ### Social Features
